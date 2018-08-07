@@ -1,30 +1,27 @@
 
 var orm = require('../config/orm');
 
+
+// everytime the page refreshes both the create and update redirect the user to the homepage HTML Route , that is why
+// there is a response
 var burger = {
     all: function (cb) {
         console.log(orm);
-        
+
         orm.selectAll("burgers", function (res) {
             cb(res);
         });
     },
 
-    create: function(cols,vals, cb){
-        orm.insertOne("burgers",cols,vals,function (err,res){
-            if (err) throw err;
-
-            cb(res);
-        });
+    update: function (condition, cb) {
+        orm.updateOne("burgers", condition, cb);
     },
 
-    update: function (condition, cb){
-        orm.updateOne("burgers",condition, function(err,res){
-            if (err) throw err;
-
-            cb(res);
-        });
+    create: function(name,cb){
+        orm.create('burgers',name, cb);
     }
+
+
 };
 
 

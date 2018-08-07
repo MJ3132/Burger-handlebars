@@ -18,42 +18,30 @@ var orm = {
         })
 
     },
-    insertOne: function (tableInput, cols, vals, cb) {
-        var query = "INSERT INTO" + tableInput + "(??)" +
-            "VALUES (?,?)";
-        connection.query(query, [cols, vals], function (err, result) {
-            if (err) throw err;
 
-            cb(result);
-        })
-    },
     updateOne: function (tableInput, condition, cb) {
-console.log("UPDATE " + tableInput + " SET devoured=true WHERE id=" + condition + ";");
-        connection.query("UPDATE " + tableInput + " SET devoured=true WHERE id=" + condition + ";", function (err, result) {
+        connection.query(
+            "UPDATE " + tableInput + " SET devoured=true WHERE id=" + condition,
+            function (err, result) {
+                if (err) {
+                    return res.status(500).end();
+                }
+               
+                cb(result);
+            });
+    },
 
-            
+    create: function (tableInput, val, cb) {
+        connection.query('INSERT INTO ' + tableInput + " (burger_name) VALUES ('" + val +"');", function (err, result) {
             if (err) throw err;
+
             cb(result);
-        });
+
+        })
     }
+
+
 }
-//     var query = "UPDATE" + tableInput;
-
-//     query += " SET ";
-//     query += objToSql(objColVals);
-//     query += " WHERE ";
-//     query += condition;
-
-//     console.log(query);
-
-//     connection.query(query, function (err, result) {
-//         if (err) throw err;
-
-//         cb(result);
-//     });
-
-// }
-
 
 
 module.exports = orm; 
