@@ -16,9 +16,7 @@ password: "password"
 
 connection.connect(function (err,res){
     if(err) throw err;
-
     console.log("you are connected!");
-
 });
 
 
