@@ -1,23 +1,23 @@
 
 var mysql = require('mysql');
+var connection;
 
 
-var connection = mysql.createConnection({
+if (process.env.JAWDB_URL) {
+    connection = mysql.createConnection(process.env.JAWSDB_URL);
+} else {
+    connection = mysql.createConnection({
 
-host: "localhost",
-user : "root",
-port: 3306,
-
-database: "burgers_db",
-password: "password"
+        host: "localhost",
+        user: "root",
+        password: "password",
+        database: "burgers_db"
 
 
-});
+    });
 
-connection.connect(function (err,res){
-    if(err) throw err;
-    console.log("you are connected!");
-});
+};
+connection.connect();
 
 
 module.exports = connection;
